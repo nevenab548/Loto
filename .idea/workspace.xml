@@ -2,28 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="751ca069-29c8-46b8-b44e-fd058fad4b04" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/loto/components/Header.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loto/pages/izvlacenje.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loto/pages/prijava.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loto/pages/registracija.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loto/pages/tiket.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loto/server/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Loto.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Loto.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/.prettierrc.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/readme.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/src/components.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/src/components/login-component/login-component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/src/components/login-component/login-component.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/src/components/register-component/register-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/loto/components/Footer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/src/components/register-component/register-component.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/src/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/src/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/stencil.config.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loto/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/loto/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loto/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/loto/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +18,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -52,6 +37,9 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Server" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="C:\Users\Nevena\Desktop\Napredne Baze Podataka\Loto\loto\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -75,6 +63,7 @@
       <workItem from="1639333724816" duration="364000" />
       <workItem from="1640114131956" duration="1290000" />
       <workItem from="1640519063764" duration="6055000" />
+      <workItem from="1640718459696" duration="473000" />
     </task>
     <servers />
   </component>
