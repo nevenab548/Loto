@@ -10,36 +10,116 @@ const redisClient = redis.createClient();
 
 app.post('/create-user', jsonParser, (req, res) => {
 
-    const newUser =req.body;
+    const noviKorisnik =req.body;
 
-    redisClient.HSET("users",newUser.userName, JSON.stringify(newUser))
-        .then(redisResponse => {
-            if(redisResponse) {
-                res.send(redisResponse.toString())
-            }
-            else {
-                res.send("User already exists")
-            }
-        })
-        .catch(err => {
-            res.send(err);
-        })
+    let proveriPraznoPolje = false;
+
+    for(const opc in proveriPraznoPolje) {
+        if(proveriPraznoPolje[opc] === "") {
+            proveriPraznoPolje = true;
+        }
+    }
+
+    if(proveriPraznoPolje) {
+        res.status(400);
+        res.send("Niste popunili sva polja");
+    }
+    else if(noviKorisnik.mailAdresa !== noviKorisnik.mailAdresaPonovo) {
+        res.status(400);
+        res.send("Mail adrese se ne poklapaju");
+    }
+    else if(noviKorisnik.sifra !== noviKorisnik.sifraPonovi) {
+        res.status(400);
+        res.send("Sifre koje ste uneli se ne poklapaju");
+    }
+    else {
+        redisClient.HSET("korisnici", noviKorisnik.korisnickoIme, JSON.stringify(noviKorisnik))
+            .then(redisResponse => {
+                if (redisResponse) {
+                    res.send("Uspesno unet korisnik");
+                } else {
+                    res.send("Korisnik vec postoji");
+                }
+            })
+            .catch(err => {
+                res.send(err);
+            })
+    }
 })
 
 app.post('/get-user', jsonParser, (req, res) => {
 
-    redisClient.HGET("users",req.body.userName)
+    redisClient.HGET("korisnici",req.body.korisnickoIme)
         .then(redisResponse => {
-            const user = JSON.parse(redisResponse);
-            res.send(user.password);
+            if(redisResponse) {
+                const korisnik = JSON.parse(redisResponse);
+                if (req.body.sifra === korisnik.sifra) {
+                    res.send(korisnik);
+                } else {
+                    res.status(400);
+                    res.send("Pogresno uneta sifra");
+                }
+            }
+            else {
+                res.send("Pogresno uneto korisnicko ime");
+            }
         })
         .catch(err => {
             res.send(err);
         })
 })
 
+app.post('/create-ticket', jsonParser, (req, res) => {
 
+    const tiket =req.body;
 
+    redisClient.HSET("tiketi", tiket.korisnickoIme, JSON.stringify(tiket))
+        .then(redisResponse1 => {
+            if (redisResponse1) {
+                redisClient.EXPIRE("tiketi", tiket.expTime)
+                    .then(redisResponse2 => {
+                        if(redisResponse2) {
+                            res.send("Uspesno odigran tiket");
+                        }
+                        else {
+                            res.send("Tiket nije pravilno odigran");
+                        }
+
+                    })
+                    .catch(err => {
+                        res.send(err);
+                    })
+
+            } else {
+                res.send("Tiket nije pravilno odigran");
+            }
+        })
+        .catch(err => {
+            res.send(err);
+        })
+})
+
+app.post('/get-all-tickets', jsonParser,(req, res) => {
+    redisClient.hGetAll("tiketi")
+        .then(redisResponse => {
+            res.send(redisResponse);
+
+        })
+        .catch(err => {
+            res.send(err);
+        })
+})
+
+app.post('/get-user-tickets', jsonParser, (req, res) => {
+    redisClient.HGET("tiketi",req.body.korisnickoIme)
+        .then(redisResponse => {
+            const tiket = JSON.parse(redisResponse);
+            res.send(tiket);
+        })
+        .catch(err => {
+            res.send(err);
+        })
+})
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
@@ -52,3 +132,6 @@ redisClient.connect()
     .catch(err => {
         console.log(err);
     })
+/*Tiketi su smesteni u set i sadrze key value par userName - kombinacija
+koja je niz brojeva, cuva se isto kao json koji ima property numbers i property userName*/
+//Tiketi se prosledjuje i exptime koji se dobija od front-a, da zna kad istice ceo hash za tikete
