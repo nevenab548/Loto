@@ -16,7 +16,7 @@ export default async (req, res) => {
         if (response.ok) {
             const js = await response.json()
             // Need camelcase in the frontend
-            const data = Object.assign({}, {avatarUrl: js.avatar_url}, js)
+            const data = Object.assign({}, {username: js.username}, js)
             return res.status(200).json({data})
         } else {
             const error = new Error(response.statusText)

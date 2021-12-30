@@ -7,7 +7,7 @@ export function Prijava() {
 
     const [userData, setUserData] = useState({username: '', error: ''})
 
-    async function handleSubmit(event: { preventDefault: () => void; }) {
+    async function handleSubmit(event: any) {
         event.preventDefault()
         setUserData(Object.assign({}, userData, {error: ''}))
 
@@ -26,9 +26,8 @@ export function Prijava() {
                 await login({token})
             } else {
                 console.log('Login failed.')
-                // https://github.com/developit/unfetch#caveats
                 let error = new Error(response.statusText)
-                error.response = response
+                error.message = JSON.stringify(response)
                 throw error
             }
         } catch (error) {
