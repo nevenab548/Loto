@@ -1,61 +1,103 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import {useCookies} from "react-cookie"
-import React, {useRef} from 'react'
+import {login} from '../utils/auth';
+import React, {useState} from 'react'
 
-export default class Prijava extends React.Component {
+export function Prijava() {
 
-    state = {
-        username: "",
-        password: ""
+    const [userData, setUserData] = useState({username: '', error: ''})
+
+    async function handleSubmit(event: { preventDefault: () => void; }) {
+        event.preventDefault()
+        setUserData(Object.assign({}, userData, {error: ''}))
+
+        const username = userData.username
+        const url = '/api/login'
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username}),
+            })
+            if (response.status === 200) {
+                const {token} = await response.json()
+                await login({token})
+            } else {
+                console.log('Login failed.')
+                // https://github.com/developit/unfetch#caveats
+                let error = new Error(response.statusText)
+                error.response = response
+                throw error
+            }
+        } catch (error) {
+            console.error(
+                'You have an error in your code or there are Network issues.',
+                error
+            )
+
+            const {response} = error
+            setUserData(
+                Object.assign({}, userData, {
+                    error: response ? response.statusText : error.message,
+                })
+            )
+        }
     }
 
-    render() {
-        return (
-            <main className='d-flex flex-column min-vh-100'>
-                <Header/>
-                <br/>
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-md-6">
-                            <div className="card">
-                                <header className="card-header">
-                                    <h4 className="card-title mt-2">Prijava</h4>
-                                </header>
-                                <article className="card-body">
-                                    <form>
-                                        <div className="form-row">
-                                            <div className="form-group col">
-                                                <label>Korisnicko ime</label>
-                                                <input id="inputLogin" type="text"
-                                                       className="form-control"
-                                                       placeholder="" required/>
-                                            </div>
+    return (
+        <main className='d-flex flex-column min-vh-100'>
+            <Header/>
+            <br/>
+            <div className="container">
+                <div className="row justify-content-center">
+                    <div className="col-md-6">
+                        <div className="card">
+                            <header className="card-header">
+                                <h4 className="card-title mt-2">Prijava</h4>
+                            </header>
+                            <article className="card-body">
+                                <form onSubmit={handleSubmit}>
+                                    <div className="form-row">
+                                        <div className="form-group col">
+                                            <label>Korisnicko ime</label>
+                                            <input id="inputLogin" type="text"
+                                                   className="form-control"
+                                                   placeholder="" required
+                                                   value={userData.username}
+                                                   onChange={event =>
+                                                       setUserData(
+                                                           Object.assign({}, userData, {username: event.target.value})
+                                                       )
+                                                   }/>
                                         </div>
-                                        <div className="form-row">
-                                            <div className="form-group col">
-                                                <label>Sifra</label>
-                                                <input id="inputPasswordLogin" type="password" className="form-control"
-                                                       placeholder="" required/>
-                                            </div>
+                                    </div>
+                                    <div className="form-row">
+                                        <div className="form-group col">
+                                            <label>Sifra</label>
+                                            <input id="inputPasswordLogin" type="password" className="form-control"
+                                                   placeholder="" required/>
                                         </div>
-                                        <br/>
-                                        <div className="form-group">
-                                            <button id="loginBtn" type="submit"
-                                                    className="btn btn-primary btn-block"> Prijavi se
-                                            </button>
-                                        </div>
-                                    </form>
-                                </article>
-                                <div className="border-top card-body text-center">Nemas nalog? <a href='/registracija'>Registruj
-                                    se</a>
-                                </div>
+                                    </div>
+                                    <br/>
+                                    <div className="form-group">
+                                        <button id="loginBtn" type="submit"
+                                                className="btn btn-primary btn-block"> Prijavi se
+                                        </button>
+                                    </div>
+                                    {userData.error && <p className="error">Error: {userData.error}</p>}
+                                </form>
+                            </article>
+                            <div className="border-top card-body text-center">Nemas nalog? <a href='/registracija'>Registruj
+                                se</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <Footer/>
-            </main>
-        );
-    }
+            </div>
+            <Footer/>
+        </main>
+    );
 }
+export default Prijava

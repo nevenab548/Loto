@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="751ca069-29c8-46b8-b44e-fd058fad4b04" name="Changes" comment="node i next">
-      <change afterPath="$PROJECT_DIR$/loto/components/Raffle.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loto/components/Ticket.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loto/helpers/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loto/pages/profil.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loto/styles/profil.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loto/styles/ticket.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Loto.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Loto.iml" afterDir="false" />
+    <list default="true" id="751ca069-29c8-46b8-b44e-fd058fad4b04" name="Changes" comment="dodate tiket i izvlacenje stranice">
+      <change afterPath="$PROJECT_DIR$/loto/pages/api/login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loto/pages/api/profile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loto/utils/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loto/utils/get-host.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/loto/components/Header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loto/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/loto/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loto/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/loto/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/loto/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/pages/izvlacenje.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/loto/pages/izvlacenje.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loto/pages/prijava.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/loto/pages/prijava.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loto/pages/tiket.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/loto/pages/tiket.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loto/pages/profil.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/loto/pages/profil.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +68,8 @@
       <workItem from="1640519063764" duration="6055000" />
       <workItem from="1640718459696" duration="473000" />
       <workItem from="1640810834360" duration="921000" />
-      <workItem from="1640853246368" duration="13176000" />
+      <workItem from="1640853246368" duration="13498000" />
+      <workItem from="1640887868704" duration="2862000" />
     </task>
     <task id="LOCAL-00001" summary="node i next">
       <created>1640811094594</created>
@@ -83,7 +78,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640811094594</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="dodate tiket i izvlacenje stranice">
+      <created>1640868060436</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1640868060436</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -102,6 +104,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="node i next" />
-    <option name="LAST_COMMIT_MESSAGE" value="node i next" />
+    <MESSAGE value="dodate tiket i izvlacenje stranice" />
+    <option name="LAST_COMMIT_MESSAGE" value="dodate tiket i izvlacenje stranice" />
   </component>
 </project>
