@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="751ca069-29c8-46b8-b44e-fd058fad4b04" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/loto/server/server.js" afterDir="false" />
+    <list default="true" id="751ca069-29c8-46b8-b44e-fd058fad4b04" name="Changes" comment="node i next">
+      <change afterPath="$PROJECT_DIR$/loto/components/Raffle.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loto/components/Ticket.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loto/helpers/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loto/pages/profil.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loto/styles/profil.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loto/styles/ticket.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Loto.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Loto.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loto/components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/loto/components/Header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loto/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/loto/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loto/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/loto/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loto/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/loto/pages/_app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loto/pages/izvlacenje.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/loto/pages/izvlacenje.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loto/pages/prijava.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/loto/pages/prijava.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loto/pages/tiket.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/loto/pages/tiket.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +73,17 @@
       <workItem from="1640114131956" duration="1290000" />
       <workItem from="1640519063764" duration="6055000" />
       <workItem from="1640718459696" duration="473000" />
+      <workItem from="1640810834360" duration="921000" />
+      <workItem from="1640853246368" duration="13176000" />
     </task>
+    <task id="LOCAL-00001" summary="node i next">
+      <created>1640811094594</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1640811094594</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -80,5 +99,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="node i next" />
+    <option name="LAST_COMMIT_MESSAGE" value="node i next" />
   </component>
 </project>

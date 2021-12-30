@@ -1,17 +1,24 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import '../styles/profil.css'
+import "../styles/ticket.css"
+import {CookiesProvider} from "react-cookie"
+import type {AppProps} from 'next/app'
 
 import {useEffect} from "react";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({Component, pageProps}: AppProps) {
 
-  useEffect(() => {
-    // @ts-ignore
-    import("bootstrap/dist/js/bootstrap");
-  }, []);
+    useEffect(() => {
+        // @ts-ignore
+        import("bootstrap/dist/js/bootstrap");
+    }, []);
 
-  return <Component {...pageProps} />
+    return(
+    <CookiesProvider>
+        <Component {...pageProps} />
+    </CookiesProvider>
+    )
 }
 
 export default MyApp

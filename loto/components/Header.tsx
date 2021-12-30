@@ -29,6 +29,11 @@ const Header = () => {
                     </ul>
 
                     <div className='text-end'>
+                        <a href={'/profil'}>
+                            <button type='button' className='btn btn-outline-light me-2'>
+                                Profil
+                            </button>
+                        </a>
                         <a href={'/prijava'}>
                         <button type='button' className='btn btn-outline-light me-2'>
                             Prijava
