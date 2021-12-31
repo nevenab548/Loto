@@ -21,35 +21,56 @@ app.post('/create-user', jsonParser, (req, res) => {
     }
 
     if(proveriPraznoPolje) {
+        return res.status(400).json({
+            status:'error',
+            error:'Niste popunili sva polja'
+        })
+        /*
         res.status(400);
         res.send("Niste popunili sva polja");
+        */
     }
-    else if(noviKorisnik.mailAdresa !== noviKorisnik.mailAdresaPonovo) {
-        res.status(400);
-        res.send("Mail adrese se ne poklapaju");
+    else if(noviKorisnik.email !== noviKorisnik.emailPonovo) {
+        return res.status(400).json({
+            status:'error',
+            error:'Mail adrese se ne poklapaju'
+        })
+       /* res.status(400);
+        res.send("Mail adrese se ne poklapaju");*/
     }
     else if(noviKorisnik.sifra !== noviKorisnik.sifraPonovi) {
-        res.status(400);
-        res.send("Sifre koje ste uneli se ne poklapaju");
+        return res.status(400).json({
+            status:'error',
+            error:'Sifre koje ste uneli se ne poklapaju'
+        })
+      /*  res.status(400);
+        res.send("Sifre koje ste uneli se ne poklapaju");*/
     }
     else {
-        redisClient.HSET("korisnici", noviKorisnik.korisnickoIme, JSON.stringify(noviKorisnik))
+        redisClient.HSET("korisnici", noviKorisnik.username, JSON.stringify(noviKorisnik))
             .then(redisResponse => {
                 if (redisResponse) {
-                    res.send("Uspesno unet korisnik");
+                   return res.status(200).json({
+                        status:'Uspesno unet korisnik'
+                    })
+                  //  res.send("Uspesno unet korisnik");
                 } else {
-                    res.send("Korisnik vec postoji");
+                    return res.status(400).json({
+                        status:'error',
+                        error:'Sifre koje ste uneli se ne poklapaju'
+                    })
+                    //res.send("Korisnik vec postoji");
                 }
             })
             .catch(err => {
-                res.send(err);
+              //  res.send(err);
             })
     }
 })
 
 app.post('/get-user', jsonParser, (req, res) => {
 
-    redisClient.HGET("korisnici",req.body.korisnickoIme)
+    redisClient.HGET("korisnici",req.body.username)
         .then(redisResponse => {
             if(redisResponse) {
                 const korisnik = JSON.parse(redisResponse);
@@ -73,7 +94,7 @@ app.post('/create-ticket', jsonParser, (req, res) => {
 
     const tiket =req.body;
 
-    redisClient.HSET("tiketi", tiket.korisnickoIme, JSON.stringify(tiket))
+    redisClient.HSET("tiketi", tiket.username, JSON.stringify(tiket))
         .then(redisResponse1 => {
             if (redisResponse1) {
                 redisClient.EXPIRE("tiketi", tiket.expTime)
@@ -111,7 +132,7 @@ app.post('/get-all-tickets', jsonParser,(req, res) => {
 })
 
 app.post('/get-user-tickets', jsonParser, (req, res) => {
-    redisClient.HGET("tiketi",req.body.korisnickoIme)
+    redisClient.HGET("tiketi",req.body.username)
         .then(redisResponse => {
             const tiket = JSON.parse(redisResponse);
             res.send(tiket);

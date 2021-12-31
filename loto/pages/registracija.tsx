@@ -95,7 +95,7 @@ export default function Registracija() {
             const response = await fetch(url, {
                 method: 'POST',
 
-                headers: {'Content-Type': 'application/json'},
+               // headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     ime,
                     prezime,

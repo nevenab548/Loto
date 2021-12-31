@@ -2,7 +2,7 @@ import fetch from 'isomorphic-unfetch'
 
 export default async (req, res) => {
     const {body} = await req.body
-    console.log('username', username)
+    //console.log('username', username)
     const url = `http://localhost:3000/create-user`
 
     try {
