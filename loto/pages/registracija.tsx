@@ -59,7 +59,7 @@ export default function Registracija() {
         const username = userData.username;
         const sifra = userData.sifra;
         const sifraProvera = userData.sifraProvera;
-        const url = '/api/register'
+        const url = 'http://localhost:3000/create-user'
 
         if (ime == '' || prezime == '' || adresa == '' || postanskiBr == '' || naselje == '' || datumR == '' || mestoR == '' || email == '' || jmbg == '' || username == '' || sifra == '') {
             alert("Niste popunili sva neophodna polja!");
@@ -94,8 +94,10 @@ export default function Registracija() {
         try {
             const response = await fetch(url, {
                 method: 'POST',
-
-               // headers: {'Content-Type': 'application/json'},
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({
                     ime,
                     prezime,
@@ -115,13 +117,13 @@ export default function Registracija() {
                 }),
             })
             if (response.status === 200) {
+                console.log("Registration success.");
                 const {token} = await response.json()
                 await login({token})
             } else {
-                console.log('Login failed.')
+                console.log('Registration failed.')
                 let error = new Error(response.statusText)
                 error.message = JSON.stringify(response)
-                throw error
             }
         } catch (error) {
             console.error(

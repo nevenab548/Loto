@@ -12,12 +12,12 @@ export function Prijava() {
         setUserData(Object.assign({}, userData, {error: ''}))
 
         const username = userData.username
-        const url = '/api/login'
+        const url = 'http://localhost:3000/get-user'
 
         try {
             const response = await fetch(url, {
                 method: 'POST',
-
+                mode:'no-cors',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({username}),
             })
@@ -28,7 +28,6 @@ export function Prijava() {
                 console.log('Login failed.')
                 let error = new Error(response.statusText)
                 error.message = JSON.stringify(response)
-                throw error
             }
         } catch (error) {
             console.error(

@@ -12,60 +12,61 @@ app.post('/create-user', jsonParser, (req, res) => {
 
     const noviKorisnik =req.body;
 
-    let proveriPraznoPolje = false;
-
-    for(const opc in proveriPraznoPolje) {
-        if(proveriPraznoPolje[opc] === "") {
-            proveriPraznoPolje = true;
-        }
-    }
-
-    if(proveriPraznoPolje) {
-        return res.status(400).json({
-            status:'error',
-            error:'Niste popunili sva polja'
-        })
+    // let proveriPraznoPolje = false;
+    //
+    // for(const opc in proveriPraznoPolje) {
+    //     if(proveriPraznoPolje[opc] === "") {
+    //         proveriPraznoPolje = true;
+    //     }
+    // }
+    //
+    // if(proveriPraznoPolje) {
+    //     return res.status(400).json({
+    //         status:'error',
+    //         error:'Niste popunili sva polja'
+    //     })
         /*
         res.status(400);
         res.send("Niste popunili sva polja");
-        */
-    }
-    else if(noviKorisnik.email !== noviKorisnik.emailPonovo) {
-        return res.status(400).json({
-            status:'error',
-            error:'Mail adrese se ne poklapaju'
-        })
-       /* res.status(400);
-        res.send("Mail adrese se ne poklapaju");*/
-    }
-    else if(noviKorisnik.sifra !== noviKorisnik.sifraPonovi) {
-        return res.status(400).json({
-            status:'error',
-            error:'Sifre koje ste uneli se ne poklapaju'
-        })
+    //     */
+    // }
+    // else if(noviKorisnik.email !== noviKorisnik.emailPonovo) {
+    //     return res.status(400).json({
+    //         status:'error',
+    //         error:'Mail adrese se ne poklapaju'
+    //     })
+    //    /* res.status(400);
+    //     res.send("Mail adrese se ne poklapaju");*/
+    // }
+    // else if(noviKorisnik.sifra !== noviKorisnik.sifraPonovi) {
+    //     return res.status(400).json({
+    //         status:'error',
+    //         error:'Sifre koje ste uneli se ne poklapaju'
+    //     })
       /*  res.status(400);
-        res.send("Sifre koje ste uneli se ne poklapaju");*/
-    }
-    else {
+    //     res.send("Sifre koje ste uneli se ne poklapaju");*/
+    // }
+    // else {
         redisClient.HSET("korisnici", noviKorisnik.username, JSON.stringify(noviKorisnik))
             .then(redisResponse => {
                 if (redisResponse) {
                    return res.status(200).json({
-                        status:'Uspesno unet korisnik'
+                        status:200,
+                        data:req.body
                     })
                   //  res.send("Uspesno unet korisnik");
-                } else {
-                    return res.status(400).json({
-                        status:'error',
-                        error:'Sifre koje ste uneli se ne poklapaju'
-                    })
+                // } else {
+                //     return res.status(400).json({
+                //         status:400,
+                //         error:'Sifre koje ste uneli se ne poklapaju'
+                //     })
                     //res.send("Korisnik vec postoji");
                 }
             })
             .catch(err => {
               //  res.send(err);
             })
-    }
+    //}
 })
 
 app.post('/get-user', jsonParser, (req, res) => {
