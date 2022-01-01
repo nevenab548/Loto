@@ -8,31 +8,21 @@ const port = 3000
 
 const redisClient = redis.createClient();
 
-app.post('/create-user', jsonParser, (req, res) => {
+app.post('/create-user', (req, res) => {
 
-    const noviKorisnik = req.body;
+    const noviKorisnik = req.body; //ovo je undefined mora da se nadje zasto
+    if (!noviKorisnik) {
+        return res.status(400).json({
+            status: 'error',
+            error: 'req body cannot be empty',
+        });
+    }
     redisClient.HSET("korisnici", noviKorisnik.username, JSON.stringify(noviKorisnik))
-        .then(redisResponse => {
-            if (!req.body.name) {
-                res.status(400).json({
-                    status: 'error',
-                    error: 'req body cannot be empty',
-                });
-                res.send()
-            }
-            res.status(200).json({
+
+            return res.status(200).json({
                 status: 200,
                 data: req.body
             })
-            res.send()
-        })
-        .catch(err => {
-            res.status(500).json({
-                status: 500,
-                error: err,
-            });
-            res.send()
-        })
 })
 
 app.post('/get-user', jsonParser, (req, res) => {

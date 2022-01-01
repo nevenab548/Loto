@@ -89,48 +89,32 @@ function Registracija() {
             alert("Niste uneli validan broj telefona!");
             return;
         }
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({
-                    ime: ime,
-                    prezime: prezime,
-                    pol: pol,
-                    adresa: adresa,
-                    postanskiBr: postanskiBr,
-                    naselje: naselje,
-                    drzava: drzava,
-                    datumR: datumR,
-                    mestoR: mestoR,
-                    email: email,
-                    brTel: brTel,
-                    jmbg: jmbg,
-                    brBank: brBank,
-                    username: username,
-                    sifra: sifra
-                })
+        const response = await fetch(url, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({
+                ime: ime,
+                prezime: prezime,
+                pol: pol,
+                adresa: adresa,
+                postanskiBr: postanskiBr,
+                naselje: naselje,
+                drzava: drzava,
+                datumR: datumR,
+                mestoR: mestoR,
+                email: email,
+                brTel: brTel,
+                jmbg: jmbg,
+                brBank: brBank,
+                username: username,
+                sifra: sifra
             })
-            if (response.status === 200) {
-                console.log("Registration success.");
-            } else {
-                console.log('Registration failed.')
-                let error = new Error(response.statusText)
-                error.message = JSON.stringify(response)
-            }
-        } catch (error: any) {
-            console.error(
-                'You have an error in your code or there are Network issues.',
-                error
-            )
-
-            const {response} = error
-            setUserData(
-                Object.assign({}, userData, {
-                    error: response ? response.statusText : error.message,
-                })
-            )
+        })
+        if (response.status === 200) {
+            console.log("Registration success.");
+        } else {
+            console.log(response.status)
+            console.log('Registration failed.')
         }
     }
 
