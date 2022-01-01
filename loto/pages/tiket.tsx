@@ -15,10 +15,10 @@ const Tiket = () => {
         </div>
     )
 }
-//ova cela funkcija da se prebaciju u komponentu i da se stavi na klik na dugme kao u register da bude create-ticket
+
 Tiket.getInitialProps = async (ctx: any) => {
     const {token} = nextCookie(ctx);
-    const apiUrl = "http://localhost/";
+    const apiUrl = "http://localhost/get-user";
 
     const redirectOnError = () =>
         typeof window !== "undefined"

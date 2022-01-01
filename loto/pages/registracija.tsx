@@ -1,8 +1,6 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import {useState} from "react";
-import {login} from "../utils/auth";
-import fetch from 'isomorphic-unfetch'
 
 function Registracija() {
 
@@ -96,38 +94,32 @@ function Registracija() {
             const response = await fetch(url, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify({
-                    ime,
-                    prezime,
-                    pol,
-                    adresa,
-                    postanskiBr,
-                    naselje,
-                    drzava,
-                    datumR,
-                    mestoR,
-                    email,
-                    brTel,
-                    jmbg,
-                    brBank,
-                    username,
-                    sifra
-                }),
+                    ime: ime,
+                    prezime: prezime,
+                    pol: pol,
+                    adresa: adresa,
+                    postanskiBr: postanskiBr,
+                    naselje: naselje,
+                    drzava: drzava,
+                    datumR: datumR,
+                    mestoR: mestoR,
+                    email: email,
+                    brTel: brTel,
+                    jmbg: jmbg,
+                    brBank: brBank,
+                    username: username,
+                    sifra: sifra
+                })
             })
             if (response.status === 200) {
                 console.log("Registration success.");
-                const {token} = await response.json()
-                await login({token})
             } else {
                 console.log('Registration failed.')
                 let error = new Error(response.statusText)
                 error.message = JSON.stringify(response)
-                console.log(response.statusText)
             }
-        } catch (error:any) {
+        } catch (error: any) {
             console.error(
                 'You have an error in your code or there are Network issues.',
                 error
@@ -396,4 +388,5 @@ function Registracija() {
         </main>
     );
 }
+
 export default Registracija
