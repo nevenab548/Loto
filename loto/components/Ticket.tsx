@@ -1,7 +1,13 @@
 import {useState} from "react";
 import exp from "constants";
+import nextCookie from "next-cookies";
+import Router from "next/router";
+import fetch from "isomorphic-unfetch";
+import {withAuthSync} from "../utils/auth";
 
-const Ticket = () => {
+const Ticket = (props:any) => {
+
+    const username = props.data.username;
 
     const [ticketData, setTicketData] = useState({
         'broj1':'',
@@ -11,6 +17,7 @@ const Ticket = () => {
         'broj5':'',
         'broj6':'',
         'broj7':'',
+        'username':username,
         'expTime':'86400' //dan
     })
     const url = 'http://localhost:3000/create-ticket'
@@ -27,6 +34,12 @@ const Ticket = () => {
         const broj6 = ticketData.broj6;
         const broj7 = ticketData.broj7;
         const expTime = ticketData.expTime;
+
+        if( new Set([broj1, broj2, broj3, broj4, broj5, broj6, broj7]).size !== [broj1, broj2, broj3, broj4, broj5, broj6, broj7].length)
+        {
+            alert("Ne mozete uneti dva ista broja za tiket!");
+            return;
+        }
         
         try {
             const response = await fetch(url, {
@@ -108,5 +121,33 @@ const Ticket = () => {
         </div>
     )
 }
+Ticket.getInitialProps = async (ctx: any) => {
+    const {token} = nextCookie(ctx);
+    const apiUrl = "http://localhost/get-user";
 
-export default Ticket
+    const redirectOnError = () =>
+        typeof window !== "undefined"
+            ? Router.push("/prijava")
+            : ctx.res.writeHead(302, {Location: "/prijava"}).end();
+
+    try {
+        const response = await fetch(apiUrl, {
+            credentials: "include",
+            headers: {
+                Authorization: JSON.stringify({token})
+            }
+        });
+
+        if (response.ok) {
+            const js = await response.json();
+            console.log("js", js);
+            return js;
+        } else {
+            return await redirectOnError();
+        }
+    } catch (error) {
+        // Implementation or Network error
+        return redirectOnError();
+    }
+};
+export default withAuthSync(Ticket)
