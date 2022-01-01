@@ -7,7 +7,6 @@ import nextCookie from "next-cookies";
 import {withAuthSync} from "../utils/auth";
 
 const Profil = (props: any) => {
-    console.log(props.body)
     const {
         ime,
         prezime,
@@ -24,6 +23,15 @@ const Profil = (props: any) => {
         brBank,
         username
     } = props.body;
+    var src="";
+    if (pol=='Muski' || pol=='')
+    {
+       src = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
+    }
+    else
+    {
+        src = "https://images.cdn1.stockunlimited.net/clipart450/woman-with-long-hair_1347443.jpg";
+    }
     return (
         <div>
             <Header/>
@@ -32,7 +40,7 @@ const Profil = (props: any) => {
                     <div className="col-md-3 border-right">
                         <div className="d-flex flex-column align-items-center text-center p-3 py-5"><img
                             className="rounded-circle mt-5" width="150px"
-                            src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"/><span
+                            src={src} alt={""}/><span
                             className="font-weight-bold">{ime} {prezime}</span><span
                             className="text-black-50">{username}</span><span> </span></div>
                     </div>
@@ -103,11 +111,8 @@ Profil.getInitialProps = async (ctx: any) => {
             },
             body:JSON.stringify({token}),
         });
-        console.log(response)
         if (response.status == 200) {
-            const js = await response.json();
-            //console.log("js", js);
-            return js;
+            return await response.json();
         } else {
             return await redirectOnError();
         }

@@ -56,30 +56,15 @@ app.post('/get-user-by-username', (req, res) => {
 app.post('/create-ticket', (req, res) => {
 
     const tiket = req.body;
+    if(!tiket)
+    {
+        res.sendStatus(400)
+    }
 
     redisClient.HSET("tiketi", tiket.username, JSON.stringify(tiket))
-        .then(redisResponse1 => {
-            if (redisResponse1) {
-                redisClient.EXPIRE("tiketi", tiket.expTime)
-                    .then(redisResponse2 => {
-                        if (redisResponse2) {
-                            res.send("Uspesno odigran tiket");
-                        } else {
-                            res.send("Tiket nije pravilno odigran");
-                        }
+    redisClient.EXPIRE("tiketi", tiket.expTime)
 
-                    })
-                    .catch(err => {
-                        res.send(err);
-                    })
-
-            } else {
-                res.send("Tiket nije pravilno odigran");
-            }
-        })
-        .catch(err => {
-            res.send(err);
-        })
+    res.sendStatus(200)
 })
 
 app.post('/get-all-tickets', (req, res) => {

@@ -16,32 +16,25 @@ const Izvlacenje = () => {
     )
 }
 Izvlacenje.getInitialProps = async (ctx: any) => {
-    const {token} = nextCookie(ctx);
-    const apiUrl = "http://localhost:3000/get-user-tickets";
+    const token = nextCookie(ctx);
+    const apiUrl = "http://localhost:3000/get-user-by-username";
 
     const redirectOnError = () =>
         typeof window !== "undefined"
             ? Router.push("/prijava")
             : ctx.res.writeHead(302, {Location: "/prijava"}).end();
 
-    try {
-        const response = await fetch(apiUrl, {
-            credentials: "include",
-            headers: {
-                Authorization: JSON.stringify({token})
-            }
-        });
-
-        if (response.ok) {
-            const js = await response.json();
-            console.log("js", js);
-            return js;
-        } else {
-            return await redirectOnError();
-        }
-    } catch (error) {
-        // Implementation or Network error
-        return redirectOnError();
+    const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({token}),
+    });
+    if (response.status == 200) {
+        return await response.json();
+    } else {
+        return await redirectOnError();
     }
 };
 export default withAuthSync(Izvlacenje)
