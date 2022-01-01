@@ -20,11 +20,9 @@ export function Prijava() {
             headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             body: JSON.stringify({username, sifra}),
         })
-        console.log(response)
         if (response.status === 200) {
             console.log('Login success.')
-            const { id } = await response.json()
-            const {token} = {token:id}
+            const {token} = {'token':username};
             await login({token})
         } else {
             console.log('Login failed.')

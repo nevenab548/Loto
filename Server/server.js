@@ -30,7 +30,7 @@ app.post('/get-user', (req, res) => {
             if (redisResponse) {
                 const korisnik = JSON.parse(redisResponse);
                 if (req.body.sifra === korisnik.sifra) {
-                    return res.status(200).json({ token: res.json() })
+                    res.sendStatus(200)
                 } else {
                     res.sendStatus(400)
                 }
@@ -38,8 +38,18 @@ app.post('/get-user', (req, res) => {
                 res.sendStatus(400)
             }
         })
-        .catch(() => {
-            res.sendStatus(500)
+})
+
+app.post('/get-user-by-username', (req, res) => {
+
+    redisClient.HGET("korisnici", req.body.token.token)
+        .then(redisResponse => {
+            if (redisResponse) {
+                const korisnik = JSON.parse(redisResponse);
+                res.send({status:200, body:korisnik})
+            } else {
+                res.sendStatus(400)
+            }
         })
 })
 

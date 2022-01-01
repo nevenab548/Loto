@@ -7,6 +7,7 @@ import nextCookie from "next-cookies";
 import {withAuthSync} from "../utils/auth";
 
 const Profil = (props: any) => {
+    console.log(props.body)
     const {
         ime,
         prezime,
@@ -20,9 +21,9 @@ const Profil = (props: any) => {
         email,
         brTel,
         jmbg,
-        brRacuna,
+        brBank,
         username
-    } = props.data;
+    } = props.body;
     return (
         <div>
             <Header/>
@@ -41,39 +42,39 @@ const Profil = (props: any) => {
                                 <h4 className="text-right">Korisnicki profil</h4>
                             </div>
                             <div className="row mt-2">
-                                <div className="col-md-6"><label className="labels">Pol</label><label>{pol}</label>
+                                <div className="col-md-6"><label className="labels">Pol</label>{" "}<label className="labels">{pol}</label>
                                 </div>
                                 <div className="col-md-6"><label
-                                    className="labels">Adresa</label><label>{adresa}</label>
+                                    className="labels">Adresa</label>{" "}<label className="labels">{adresa}</label>
                                 </div>
                                 <div className="col-md-6"><label
-                                    className="labels">Postanski broj</label><label>{postanskiBr}</label>
+                                    className="labels">Postanski broj</label>{" "}<label className="labels">{postanskiBr}</label>
                                 </div>
                                 <div className="col-md-6"><label
-                                    className="labels">Naselje</label><label>{naselje}</label>
+                                    className="labels">Naselje</label>{" "}<label className="labels">{naselje}</label>
                                 </div>
                                 <div className="col-md-6"><label
-                                    className="labels">Drzava</label><label>{drzava}</label>
+                                    className="labels">Drzava</label>{" "}<label className="labels">{drzava}</label>
                                 </div>
                             </div>
                             <div className="row mt-3">
                                 <div className="col-md-12"><label className="labels">Datum rodjenja</label>
-                                    <label>{datumR}</label>
+                                    {" "} <label className="labels">{datumR}</label>
                                 </div>
                                 <div className="col-md-12"><label className="labels">Mesto rodjenja</label>
-                                    <label>{mestoR}</label>
+                                    {" "}<label className="labels">{mestoR}</label>
                                 </div>
                                 <div className="col-md-12"><label className="labels">JMBG</label>
-                                    <label>{jmbg}</label>
+                                    {" "}<label className="labels">{jmbg}</label>
                                 </div>
                                 <div className="col-md-12"><label className="labels">Broj telefona</label>
-                                    <label>{brTel}</label>
+                                    {" "}<label className="labels">{brTel}</label>
                                 </div>
                                 <div className="col-md-12"><label className="labels">Email adresa</label>
-                                    <label>{email}</label>
+                                    {" "}<label className="labels">{email}</label>
                                 </div>
                                 <div className="col-md-12"><label className="labels">Broj bankovnog racuna</label>
-                                    <label>{brRacuna}</label></div>
+                                    {" "}<label className="labels">{brBank}</label></div>
                             </div>
                         </div>
                     </div>
@@ -82,34 +83,33 @@ const Profil = (props: any) => {
             <Footer/>
         </div>
     )
+    // return(
+    //     <div></div>
+    // )
 }
 Profil.getInitialProps = async (ctx: any) => {
-    const {token} = nextCookie(ctx);
-    const apiUrl = "http://localhost:3000/get-user";
+    const token = nextCookie(ctx);
+    const apiUrl = "http://localhost:3000/get-user-by-username";
 
     const redirectOnError = () =>
         typeof window !== "undefined"
             ? Router.push("/prijava")
             : ctx.res.writeHead(302, {Location: "/prijava"}).end();
 
-    try {
         const response = await fetch(apiUrl, {
-            credentials: "include",
+            method:'POST',
             headers: {
-                Authorization: JSON.stringify({token})
-            }
+                'Access-Control-Allow-Origin': '*'
+            },
+            body:JSON.stringify({token}),
         });
-
-        if (response.ok) {
+        console.log(response)
+        if (response.status == 200) {
             const js = await response.json();
-            console.log("js", js);
+            //console.log("js", js);
             return js;
         } else {
             return await redirectOnError();
         }
-    } catch (error) {
-        // Implementation or Network error
-        return redirectOnError();
-    }
 };
 export default withAuthSync(Profil)

@@ -92,9 +92,9 @@ function Registracija() {
         async function postData(url = '') {
             const response = await fetch(url, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
-                    'Content-Type': '"application/json"'
+                    'Content-Type': '"application/json"',
+                    'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({
                     "ime": ime,
