@@ -5,7 +5,6 @@ import Router from "next/router";
 import fetch from "isomorphic-unfetch";
 import nextCookie from "next-cookies";
 import {withAuthSync} from "../utils/auth";
-import getHost from "../utils/get-host";
 
 const Profil = (props: any) => {
     const {
@@ -86,7 +85,7 @@ const Profil = (props: any) => {
 }
 Profil.getInitialProps = async (ctx: any) => {
     const {token} = nextCookie(ctx);
-    const apiUrl = getHost(ctx.req) + "/api/profile";
+    const apiUrl = "http://localhost:3000/get-user";
 
     const redirectOnError = () =>
         typeof window !== "undefined"

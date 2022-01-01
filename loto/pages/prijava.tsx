@@ -29,13 +29,13 @@ export function Prijava() {
                 let error = new Error(response.statusText)
                 error.message = JSON.stringify(response)
             }
-        } catch (error) {
+        } catch (error:any) {
             console.error(
                 'You have an error in your code or there are Network issues.',
                 error
             )
 
-            const {response} = error
+            const { response } = error
             setUserData(
                 Object.assign({}, userData, {
                     error: response ? response.statusText : error.message,

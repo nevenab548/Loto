@@ -2,7 +2,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Raffle from "../components/Raffle"
 import nextCookie from "next-cookies";
-import getHost from "../utils/get-host";
 import Router from "next/router";
 import fetch from "isomorphic-unfetch";
 import {withAuthSync} from "../utils/auth";
@@ -18,7 +17,7 @@ const Izvlacenje = () => {
 }
 Izvlacenje.getInitialProps = async (ctx: any) => {
     const {token} = nextCookie(ctx);
-    const apiUrl = getHost(ctx.req) + "/api/izvlacenje";
+    const apiUrl = "http://localhost:3000/get-user-tickets";
 
     const redirectOnError = () =>
         typeof window !== "undefined"

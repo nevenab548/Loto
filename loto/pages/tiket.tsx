@@ -2,7 +2,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Ticket from "../components/Ticket"
 import nextCookie from "next-cookies";
-import getHost from "../utils/get-host";
 import Router from "next/router";
 import fetch from "isomorphic-unfetch";
 import {withAuthSync} from "../utils/auth";
@@ -16,9 +15,10 @@ const Tiket = () => {
         </div>
     )
 }
+//ova cela funkcija da se prebaciju u komponentu i da se stavi na klik na dugme kao u register da bude create-ticket
 Tiket.getInitialProps = async (ctx: any) => {
     const {token} = nextCookie(ctx);
-    const apiUrl = getHost(ctx.req) + "/api/tiket";
+    const apiUrl = "http://localhost/";
 
     const redirectOnError = () =>
         typeof window !== "undefined"

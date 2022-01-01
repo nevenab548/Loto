@@ -2,8 +2,9 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import {useState} from "react";
 import {login} from "../utils/auth";
+import fetch from 'isomorphic-unfetch'
 
-export default function Registracija() {
+function Registracija() {
 
     const [userData, setUserData] = useState({
         ime: '',
@@ -124,8 +125,9 @@ export default function Registracija() {
                 console.log('Registration failed.')
                 let error = new Error(response.statusText)
                 error.message = JSON.stringify(response)
+                console.log(response.statusText)
             }
-        } catch (error) {
+        } catch (error:any) {
             console.error(
                 'You have an error in your code or there are Network issues.',
                 error
@@ -378,7 +380,7 @@ export default function Registracija() {
                                         </button>
                                     </div>
                                     <br/>
-                                    <small className="text-muted">Klikom na 'Registruj se' dugme, potvrdjujes da
+                                    <small className="text-muted">Klikom na `Registruj se` dugme, potvrdjujes da
                                         prihvatas
                                         nase <br/> <a href=""> Uslove koriscenja. </a> </small>
                                 </form>
@@ -394,3 +396,4 @@ export default function Registracija() {
         </main>
     );
 }
+export default Registracija
