@@ -1,52 +1,49 @@
 const express = require('express');
 const redis = require('redis');
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
+const cors = require("cors");
+
 
 const app = express()
+
 const port = 3000
 
 const redisClient = redis.createClient();
 
+app.use(cors());
+app.use(express.json({type: '*/*'}));
+
 app.post('/create-user', (req, res) => {
 
-    const noviKorisnik = req.body; //ovo je undefined mora da se nadje zasto
+    const noviKorisnik = req.body;
     if (!noviKorisnik) {
-        return res.status(400).json({
-            status: 'error',
-            error: 'req body cannot be empty',
-        });
+        res.sendStatus(400)
     }
     redisClient.HSET("korisnici", noviKorisnik.username, JSON.stringify(noviKorisnik))
 
-            return res.status(200).json({
-                status: 200,
-                data: req.body
-            })
+    return res.sendStatus(200);
 })
 
-app.post('/get-user', jsonParser, (req, res) => {
+app.post('/get-user', (req, res) => {
 
     redisClient.HGET("korisnici", req.body.username)
         .then(redisResponse => {
             if (redisResponse) {
                 const korisnik = JSON.parse(redisResponse);
                 if (req.body.sifra === korisnik.sifra) {
-                    res.send(korisnik);
+                    return res.status(200).json({ token: res.json() })
                 } else {
-                    res.status(400);
-                    res.send("Pogresno uneta sifra");
+                    res.sendStatus(400)
                 }
             } else {
-                res.send("Pogresno uneto korisnicko ime");
+                res.sendStatus(400)
             }
         })
-        .catch(err => {
-            res.send(err);
+        .catch(() => {
+            res.sendStatus(500)
         })
 })
 
-app.post('/create-ticket', jsonParser, (req, res) => {
+app.post('/create-ticket', (req, res) => {
 
     const tiket = req.body;
 
@@ -75,7 +72,7 @@ app.post('/create-ticket', jsonParser, (req, res) => {
         })
 })
 
-app.post('/get-all-tickets', jsonParser, (req, res) => {
+app.post('/get-all-tickets', (req, res) => {
     redisClient.hGetAll("tiketi")
         .then(redisResponse => {
             res.send(redisResponse);
@@ -86,7 +83,7 @@ app.post('/get-all-tickets', jsonParser, (req, res) => {
         })
 })
 
-app.post('/get-user-tickets', jsonParser, (req, res) => {
+app.post('/get-user-tickets', (req, res) => {
     redisClient.HGET("tiketi", req.body.username)
         .then(redisResponse => {
             const tiket = JSON.parse(redisResponse);

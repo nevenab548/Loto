@@ -5,43 +5,33 @@ import React, {useState} from 'react'
 
 export function Prijava() {
 
-    const [userData, setUserData] = useState({username: '', error: ''})
+    const [userData, setUserData] = useState({username: '', sifra: '', error: ''})
 
     async function handleSubmit(event: any) {
         event.preventDefault()
         setUserData(Object.assign({}, userData, {error: ''}))
 
         const username = userData.username
+        const sifra = userData.sifra;
         const url = 'http://localhost:3000/get-user'
 
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                mode:'no-cors',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({username}),
-            })
-            if (response.status === 200) {
-                const {token} = await response.json()
-                await login({token})
-            } else {
-                console.log('Login failed.')
-                let error = new Error(response.statusText)
-                error.message = JSON.stringify(response)
-            }
-        } catch (error:any) {
-            console.error(
-                'You have an error in your code or there are Network issues.',
-                error
-            )
-
-            const { response } = error
-            setUserData(
-                Object.assign({}, userData, {
-                    error: response ? response.statusText : error.message,
-                })
-            )
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
+            body: JSON.stringify({username, sifra}),
+        })
+        console.log(response)
+        if (response.status === 200) {
+            console.log('Login success.')
+            const { id } = await response.json()
+            const {token} = {token:id}
+            await login({token})
+        } else {
+            console.log('Login failed.')
+            let error = new Error(response.statusText)
+            error.message = JSON.stringify(response)
         }
+
     }
 
     return (
@@ -75,7 +65,12 @@ export function Prijava() {
                                         <div className="form-group col">
                                             <label>Sifra</label>
                                             <input id="inputPasswordLogin" type="password" className="form-control"
-                                                   placeholder="" required/>
+                                                   placeholder="" required value={userData.sifra}
+                                                   onChange={event =>
+                                                       setUserData(
+                                                           Object.assign({}, userData, {sifra: event.target.value})
+                                                       )
+                                                   }/>
                                         </div>
                                     </div>
                                     <br/>
@@ -98,4 +93,5 @@ export function Prijava() {
         </main>
     );
 }
+
 export default Prijava
