@@ -9,6 +9,8 @@ import {useState} from "react";
 
 const Tiket = (props: any) => {
     const username = props.token;
+    var today = new Date();
+    var dayexp=86400-today.getDate();
 
     const [ticketData, setTicketData] = useState({
         'broj1': '',
@@ -19,7 +21,7 @@ const Tiket = (props: any) => {
         'broj6': '',
         'broj7': '',
         'username': username,
-        'expTime': '86400' //dan
+        'expTime': dayexp //dan
     })
     const url = 'http://localhost:3000/create-ticket'
 
