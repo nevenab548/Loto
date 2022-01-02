@@ -10,7 +10,7 @@ const port = 3000
 const redisClient = redis.createClient();
 
 app.use(cors());
-app.use(express.json({type: '*/*'}));
+app.use(express.json({ type: '*/*' }));
 
 app.post('/create-user', (req, res) => {
 
@@ -46,7 +46,7 @@ app.post('/get-user-by-username', (req, res) => {
         .then(redisResponse => {
             if (redisResponse) {
                 const korisnik = JSON.parse(redisResponse);
-                res.send({status:200, body:korisnik})
+                res.send({ status: 200, body: korisnik })
             } else {
                 res.sendStatus(400)
             }
@@ -56,8 +56,7 @@ app.post('/get-user-by-username', (req, res) => {
 app.post('/create-ticket', (req, res) => {
 
     const tiket = req.body;
-    if(!tiket)
-    {
+    if (!tiket) {
         res.sendStatus(400)
     }
 
@@ -89,6 +88,52 @@ app.post('/get-user-tickets', (req, res) => {
         })
 })
 
+app.post('/set-raffle', (req, res) => {
+    let arrayOfNumbers = [];
+
+    for (let i = 0; i < 7; i++) {
+        arrayOfNumbers.push(getRandomNumber(39, arrayOfNumbers));
+    }
+
+    let raffleObject = {
+        numbers: arrayOfNumbers
+    }
+
+    redisClient.SETEX("izvlacenje", 86400, JSON.stringify(raffleObject))
+        .then(reddisResponse => {
+            res.send(reddisResponse);
+        })
+        .catch(err => {
+            res.send(err);
+        })
+})
+
+app.post('get-raffle', (req, res) => {
+    redisClient.GET("izvlacenje")
+        .then(reddisResponse => {
+            if (reddisResponse) {
+                res.send(JSON.parse(reddisResponse));
+            }
+        })
+        .catch(err => {
+            res.send(err);
+        })
+})
+
+function getRandomNumber(max, array) {
+
+    let num;
+
+    while (true) {
+        num = Math.floor(Math.random() * (max - 1 + 1) + 1);
+        if (!array.includes(num)) {
+            break;
+        }
+    }
+
+    return num;
+}
+
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`)
 })
@@ -100,6 +145,5 @@ redisClient.connect()
     .catch(err => {
         console.log(err);
     })
-/*Tiketi su smesteni u set i sadrze key value par userName - kombinacija
-koja je niz brojeva, cuva se isto kao json koji ima property numbers i property userName*/
-//Tiketi se prosledjuje i exptime koji se dobija od front-a, da zna kad istice ceo hash za tikete
+// Kad se korisnik uloguje da mu se skloni register i login opcija, da svi tiket isteknu u isto vreme,
+//     a da najduze traje jedan dan tiket
