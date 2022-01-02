@@ -1,13 +1,14 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import {useState} from "react";
+import Router from "next/router";
 
 function Registracija() {
 
     const [userData, setUserData] = useState({
         ime: '',
         prezime: '',
-        pol: '',
+        pol: 'Muski',
         adresa: '',
         postanskiBr: '',
         naselje: '',
@@ -119,6 +120,7 @@ function Registracija() {
         postData(url)
             .then(data => {
                 console.log(data);
+                Router.push("/prijava");
             });
     }
 

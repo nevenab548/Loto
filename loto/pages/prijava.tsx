@@ -25,7 +25,7 @@ export function Prijava() {
             const {token} = {'token':username};
             await login({token})
         } else {
-            console.log('Login failed.')
+            alert('Neuspesno logovanje.')
             let error = new Error(response.statusText)
             error.message = JSON.stringify(response)
         }
