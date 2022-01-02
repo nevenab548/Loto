@@ -24,6 +24,7 @@ const Profil = (props: any) => {
         username
     } = props.body;
     var src="";
+   
     if (pol=='Muski' || pol=='')
     {
        src = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
