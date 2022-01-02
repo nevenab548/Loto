@@ -60,8 +60,11 @@ app.post('/create-ticket', (req, res) => {
         res.sendStatus(400)
     }
 
+    let dt = new Date();
+    let secs = dt.getSeconds() + (60 * dt.getMinutes()) + (60 * 60 * dt.getHours())
+
     redisClient.HSET("tiketi", tiket.username, JSON.stringify(tiket))
-    redisClient.EXPIRE("tiketi", tiket.expTime)
+    redisClient.EXPIRE("tiketi", tiket.expTime - secs - 9000)
 
     res.sendStatus(200)
 })
@@ -99,7 +102,7 @@ app.post('/set-raffle', (req, res) => {
         numbers: arrayOfNumbers
     }
 
-    redisClient.SETEX("izvlacenje", 86400, JSON.stringify(raffleObject))
+    redisClient.SETEX("izvlacenje", 1800, JSON.stringify(raffleObject))
         .then(reddisResponse => {
             res.send(reddisResponse);
         })
@@ -108,7 +111,7 @@ app.post('/set-raffle', (req, res) => {
         })
 })
 
-app.post('get-raffle', (req, res) => {
+app.post('/get-raffle', (req, res) => {
     redisClient.GET("izvlacenje")
         .then(reddisResponse => {
             if (reddisResponse) {
