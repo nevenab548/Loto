@@ -12,6 +12,7 @@ const redisClient = redis.createClient();
 app.use(cors());
 app.use(express.json({ type: '*/*' }));
 
+
 app.post('/create-user', (req, res) => {
 
     const noviKorisnik = req.body;
@@ -91,7 +92,29 @@ app.post('/get-user-tickets', (req, res) => {
         })
 })
 
+//Kad se upali server racuna se vreme do izvlacenja i tad se salje event, a posle se stavlja na jedan dan
+//
+
+function sendServerSendEvent(req, res, raffleObject) {
+
+    setInterval(function () {
+        redisCall(res, raffleObject);
+    }, 86400);
+}
+
+function redisCall(res, raffleObject) {
+    redisClient.SETEX("izvlacenje", 1800, JSON.stringify(raffleObject))
+        .then(reddisResponse => {
+            res.send(reddisResponse);
+        })
+        .catch(err => {
+            res.send(err);
+        })
+}
+
 app.post('/set-raffle', (req, res) => {
+
+
     let arrayOfNumbers = [];
 
     for (let i = 0; i < 7; i++) {
@@ -101,14 +124,7 @@ app.post('/set-raffle', (req, res) => {
     let raffleObject = {
         numbers: arrayOfNumbers
     }
-
-    redisClient.SETEX("izvlacenje", 1800, JSON.stringify(raffleObject))
-        .then(reddisResponse => {
-            res.send(reddisResponse);
-        })
-        .catch(err => {
-            res.send(err);
-        })
+    sendServerSendEvent(req, res, raffleObject);
 })
 
 app.post('/get-raffle', (req, res) => {
