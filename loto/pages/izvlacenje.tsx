@@ -10,13 +10,13 @@ import { withAuthSync } from "../utils/auth";
 //na osnovu cega se utvrdjuje da li je neki tiket dobitan.
 
 const Izvlacenje = (props: any) => {
-    const {
+    /*const {
         numbers = [] //ovo je primer cisto
-    } = props.body;
+    } = props.body;*/
     var today = new Date();
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     var tmdate = today.getFullYear() + '-' + (today.getMonth() + 2) + '-' + today.getDate();
-    console.log(numbers)
+   // console.log(numbers)
 
     return (
         <div>
@@ -47,7 +47,7 @@ const Izvlacenje = (props: any) => {
 Izvlacenje.getInitialProps = async (ctx: any) => {
     const token = nextcookie(ctx);
     const apiUrl = "http://localhost:3000/get-user-by-username";
-    const apiRaffle = "http://localhost:3000/get-raffle";
+   
 
     const redirectOnError = () =>
         typeof window !== "undefined"
@@ -61,14 +61,8 @@ Izvlacenje.getInitialProps = async (ctx: any) => {
         },
         body: JSON.stringify({ token }),
     });
-    const response2 = await fetch(apiRaffle, {
-        method: 'POST',
-        headers: {
-            'Access-Control-Allow-Origin': '*'
-        },
-        body: JSON.stringify({ token }),
-    });
-    if (response.status == 200 && response2.status == 200) {
+    
+    if (response.status == 200 ) {
         return await response.json();
     } else {
         return await redirectOnError();
