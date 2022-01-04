@@ -82,14 +82,13 @@ app.post('/get-all-tickets', (req, res) => {
 })
 
 app.post('/get-user-tickets', (req, res) => {
-    redisClient.HGET("tiketi", req.body.username)
-        .then(redisResponse => {
-            const tiket = JSON.parse(redisResponse);
-            res.send(tiket);
-        })
-        .catch(err => {
-            res.send(err);
-        })
+    redisClient.HGET("tiketi", req.body.token.token)
+    if (redisResponse) {
+        const tiket = JSON.parse(redisResponse);
+        res.send({ status: 200, body: tiket })
+    } else {
+        res.sendStatus(400)
+    }
 })
 
 //Kad se upali server racuna se vreme do izvlacenja i tad se salje event, a posle se stavlja na jedan dan
