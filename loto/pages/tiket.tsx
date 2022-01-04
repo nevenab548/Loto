@@ -67,7 +67,7 @@ const Tiket = (props: any) => {
         }
         postData(url)
             .then(data => {
-                console.log(data);
+                alert("Uspesno kreiran tiket!");
             });
     }
 

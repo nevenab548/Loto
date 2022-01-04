@@ -10,7 +10,7 @@ const port = 3000
 const redisClient = redis.createClient();
 
 app.use(cors());
-app.use(express.json({ type: '*/*' }));
+app.use(express.json({type: '*/*'}));
 
 
 app.post('/create-user', (req, res) => {
@@ -47,7 +47,7 @@ app.post('/get-user-by-username', (req, res) => {
         .then(redisResponse => {
             if (redisResponse) {
                 const korisnik = JSON.parse(redisResponse);
-                res.send({ status: 200, body: korisnik })
+                res.send({status: 200, body: korisnik})
             } else {
                 res.sendStatus(400)
             }
@@ -82,38 +82,27 @@ app.post('/get-all-tickets', (req, res) => {
 })
 
 app.post('/get-user-tickets', (req, res) => {
-    redisClient.HGET("tiketi", req.body.token.token)
-    if (redisResponse) {
-        const tiket = JSON.parse(redisResponse);
-        res.send({ status: 200, body: tiket })
-    } else {
-        res.sendStatus(400)
-    }
+    redisClient.HGET("tiketi", req.body.token).then(redisResponse => {
+        if (redisResponse) {
+            const tiket = redisResponse;
+            res.send({status: 200, body: tiket})
+        } else {
+            res.send({status: 400})
+        }
+    })
 })
 
 //Kad se upali server racuna se vreme do izvlacenja i tad se salje event, a posle se stavlja na jedan dan
 //
 
-function sendServerSendEvent(req, res, raffleObject) {
+function sendServerSendEvent(req, res) {
 
     setInterval(function () {
-        redisCall(res, raffleObject);
-    }, 86400);
+        redisCall(res);
+    }, 3000); //jedan dan
 }
 
-function redisCall(res, raffleObject) {
-    redisClient.SETEX("izvlacenje", 1800, JSON.stringify(raffleObject))
-        .then(reddisResponse => {
-            res.send(reddisResponse);
-        })
-        .catch(err => {
-            res.send(err);
-        })
-}
-
-app.post('/set-raffle', (req, res) => {
-
-
+function redisCall(res) {
     let arrayOfNumbers = [];
 
     for (let i = 0; i < 7; i++) {
@@ -123,18 +112,29 @@ app.post('/set-raffle', (req, res) => {
     let raffleObject = {
         numbers: arrayOfNumbers
     }
-    sendServerSendEvent(req, res, raffleObject);
+    redisClient.SETEX("izvlacenje", 1800, JSON.stringify(raffleObject))
+        .then(reddisResponse => {
+            //res.send({status:200, body:reddisResponse});
+            console.log(reddisResponse)
+        })
+        .catch(err => {
+            res.send(err);
+        })
+}
+
+app.get('/', (req, res) => {
+
+    sendServerSendEvent(req, res);
 })
 
 app.post('/get-raffle', (req, res) => {
     redisClient.GET("izvlacenje")
         .then(reddisResponse => {
             if (reddisResponse) {
-                res.send(JSON.parse(reddisResponse));
+                res.send({status: 200, body: reddisResponse});
+            } else {
+                res.send({status: 400, body: "Sacekajte vreme izvlacenja!"});
             }
-        })
-        .catch(err => {
-            res.send(err);
         })
 })
 
