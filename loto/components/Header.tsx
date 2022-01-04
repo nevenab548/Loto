@@ -26,6 +26,12 @@ const Header = () => {
                                 Izvlacenje
                             </a>
                         </li>
+                        <li>
+                            <a href='/tiketiKorisnika' className='nav-link px-2 text-white'>
+                                Tiketi Korisnika
+                            </a>
+                        </li>
+                        
                     </ul>
 
                     <div className='text-end'>

@@ -10,17 +10,15 @@ import { withAuthSync } from "../utils/auth";
 //na osnovu cega se utvrdjuje da li je neki tiket dobitan.
 
 const Izvlacenje = (props: any) => {
-    /*const {
-        numbers = [] //ovo je primer cisto
-    } = props.body;*/
+  
     var today = new Date();
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     var tmdate = today.getFullYear() + '-' + (today.getMonth() + 2) + '-' + today.getDate();
-   // console.log(numbers)
-
+   
     return (
         <div>
             <Header />
+           
             <div className='raffle'>
                 <div className='nextJackpot'><p className='regWeight'>Sledece izvlacenje:</p>
                     <p>{tmdate}</p>
