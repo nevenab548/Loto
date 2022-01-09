@@ -13,7 +13,7 @@ const Izvlacenje = (props: any) => {
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     var tmdate = today.getFullYear() + '-' + (today.getMonth() + 2) + '-' + today.getDate();
     var token = props.token;
-    var lotoValue = [1, 2, 3, 4, 5, 6, 7];
+    var lotoValue = [1,2,3,4,5,6,7];
     const ref = useRef(null)
 
     async function handleRaffle(event: any) {
@@ -114,7 +114,7 @@ const Izvlacenje = (props: any) => {
                         className='balls multiplier'>{raffleBall(6)}</span></p></div>
             </div>
             <div className='raffleButton'>
-                <button className="btn btn-primary btn-block center-btn" onClick={handleRaffle}>Prikazi izvlacenje!
+                <button className="btn btn-primary btn-block center-btn" onClick={handleRaffle}>Proveri dobitak!
                 </button>
             </div>
             <Footer/>

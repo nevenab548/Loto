@@ -99,7 +99,7 @@ function sendServerSendEvent(req, res) {
 
     setInterval(function () {
         redisCall(res);
-    }, 3000); //jedan dan
+    }, 3000); //inace jedan dan radi testiranja 3 sekunde
 }
 
 function redisCall(res) {

@@ -14,3 +14,8 @@ a {
 * {
   box-sizing: border-box;
 }
+.welcome-photo-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
